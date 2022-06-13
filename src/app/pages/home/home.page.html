@@ -1,9 +1,25 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>home</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title>Mes todos</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon slot="icon-only" name="log-out"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-button (click)="getMe()" expand="block" fill="solid" shape="round"> me </ion-button>
+  <ion-button (click)="getTodos()" expand="block" fill="solid" shape="round"> me </ion-button>
+  <ion-button (click)="presentModal()" expand="block" fill="solid" shape="round"> modal </ion-button>
 
+  <h2>Todo Label: {{ todoLabel }}</h2>
+
+  <!-- Sheet Modal -->
+  <!-- <ion-modal #modalcontent [isOpen]="true" [breakpoints]="[ 0.7]" [initialBreakpoint]="0.7">
+    <ng-template>
+      <ion-content>Ajouter un TODO</ion-content>
+    </ng-template>
+  </ion-modal> -->
 </ion-content>

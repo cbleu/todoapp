@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://tutorial-token-api.herokuapp.com'
+  // apiUrl: 'https://tutorial-token-api.herokuapp.com'
+  apiUrl: 'https://test.kmedini.fr'
 };
 
 /*

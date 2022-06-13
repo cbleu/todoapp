@@ -44,6 +44,7 @@ export class LoginPage implements OnInit {
     this.credentials = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
+      remember: [true],
     });
   }
 
@@ -88,5 +89,12 @@ export class LoginPage implements OnInit {
         await alert.present();
       }
     );
+  }
+  onCheckRemeber(event) {
+    console.log('LoginPage ~ onCheckRemeber ~ event', event.detail.checked, this.credentials.value.remember);
+    if (event.detail.checked) {
+      // TODO Gérer la sauvegarde ou pas du jeton
+    }
+
   }
 }

@@ -1,0 +1,84 @@
+:root {
+  /** app page background **/
+  --app-background: #f8f8f8; // From mockup
+
+  --ion-font-family: "Source Sans Pro", sans-serif;
+
+  --app-narrow-margin: 12px;
+  --app-fair-margin: 16px;
+  --app-broad-margin: 20px;
+  --app-large-margin: 32px;
+
+  --app-narrow-radius: 4px;
+  --app-fair-radius: 8px;
+  --app-broad-radius: 12px;
+  --app-large-radius: 40px;
+
+  --app-default-shadow: rgb(0 0 0 / 25%) 0px 4px 8px;
+  --app-hard-shadow: rgb(0 0 0 / 25%) 0px 2px 2px;
+}
+
+.dev {
+  color: var(--ion-color-danger);
+  font-size: 8px;
+  height: 8px;
+  position: relative;
+}
+
+ion-app {
+  background-color: var(--ion-color-light);
+}
+
+ion-header {
+  ion-toolbar {
+    --background: var(--app-background);
+    ion-back-button::part(text) {
+      color: transparent; // small transparent text to expand the button size for touch comfort
+    }
+  }
+}
+
+ion-title {
+  // Adding !important to force precedence in SSR
+  font-size: 15px;
+  font-weight: 700 !important;
+  letter-spacing: -0.1px !important;
+}
+
+// Override Ionic styles
+.input-clear-icon {
+  // Change these properties so the Ionic close icon aligns with show/hide password
+  &.sc-ion-input-ios,
+  &.sc-ion-input-md {
+    width: calc(1.2rem);
+    margin-inline-start: 0.5rem;
+    background-size: 12px;
+    background-image: url(/assets/icon/times-circle-duotone.svg);
+  }
+}
+
+.meta-container {
+  position: relative;
+  top: calc(var(--page-margin) * -1);
+  height: 0;
+  line-height: 1;
+  .error-message {
+    display: flex;
+    align-items: center;
+    color: var(--ion-color-danger);
+    font-size: 14px;
+    ion-icon {
+      padding-inline-end: calc(var(--page-margin) / 2);
+    }
+  }
+  .info-message {
+    display: flex;
+    align-items: center;
+    color: var(--ion-color-medium);
+    font-size: 14px;
+    ion-icon {
+      padding-inline-end: calc(var(--page-margin) / 4);
+      font-size: 22px;
+    }
+  }
+}

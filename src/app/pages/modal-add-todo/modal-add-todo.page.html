@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>modal-add-todo</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form (ngSubmit)="sendForm()" [formGroup]="todoForm">
+    <ion-item class="input-item item-lines-none">
+      <ion-textarea
+        class="label-input"
+        type="text"
+        rows="4"
+        cols="12"
+        placeholder="Ajouter une nouvelle tâche à réaliser ..."
+        formControlName="label"
+        autoGrow="on"
+        spellcheck="on"
+        autocapitalize="off"
+        inputmode="text"
+        enterkeyhint="next"
+      ></ion-textarea>
+    </ion-item>
+
+    <ion-button color="doinsport" (click)="sendForm()" expand="block" fill="solid">
+      Enregistrer
+    </ion-button>
+  </form>
+</ion-content>

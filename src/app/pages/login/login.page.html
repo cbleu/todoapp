@@ -1,58 +1,80 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Enregistrement - Connexion</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-header> </ion-header>
 
-<!-- <ion-content class="loginpage-content">
-  <form (ngSubmit)="login()" [formGroup]="credentials">
-    <div class="input-group">
-      <ion-item>
-        <ion-input placeholder="Username" formControlName="username"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
-      </ion-item>
-    </div>
+<ion-content fullscreen="true" class="loginpage-content">
+  <!-- Container blanc principal -->
+  <div class="content-container">
+    <img class="logo" src="/assets/img/logo-doinsport-2021.png" alt="DOINSPORT" />
+    <ion-card class="form-container">
+      <ion-card-header>
+        <ion-card-title>Content de vous revoir !</ion-card-title>
+        <ion-card-subtitle>connectez-vous à votre compte</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <form (ngSubmit)="login()" [formGroup]="credentials">
+          <ion-item fill="solid" class="input-item">
+            <ion-label position="floating" color="primary">Email</ion-label>
+            <ion-input type="email" formControlName="username"></ion-input>
+            <ion-icon class="input-icon" slot="end" name="mail"></ion-icon>
+            <!-- <ion-note slot="error" *ngIf="(username.dirty || username.touched) && username.errors">Email invalide</ion-note> -->
+            <ng-container *ngFor="let validation of validation_messages.username">
+              <ion-note
+                slot="error"
+                class="error-message"
+                *ngIf="this.credentials.get('username').hasError(validation.type) && (username.dirty || username.touched)"
+              >
+                <ion-icon name="warning-outline"></ion-icon>
+                <span>{{ validation.message }}</span>
+              </ion-note>
+            </ng-container>
+          </ion-item>
+          <ion-item fill="solid" class="ion-margin-bottom">
+            <ion-label position="floating" color="primary">Mot de passe</ion-label>
+            <ion-input type="password" formControlName="password"></ion-input>
+            <ion-icon class="input-icon" slot="end" name="eye"></ion-icon>
+            <ng-container *ngFor="let validation of validation_messages.password">
+              <ion-note
+                slot="error"
+                class="error-message"
+                *ngIf="this.credentials.get('password').hasError(validation.type) && (password.dirty || password.touched)"
+              >
+                <ion-icon name="warning-outline"></ion-icon>
+                <span>{{ validation.message }}</span>
+              </ion-note>
+            </ng-container>
+          </ion-item>
 
-    <ion-button type="submit" expand="block" [disabled]="!credentials.valid">Log in</ion-button>
-    <ion-button type="button" expand="block" (click)="signUp()" color="secondary">Sign up!
-    </ion-button>
-  </form>
-</ion-content> -->
-
-<ion-content class="ion-padding loginpage-content">
-  <form (ngSubmit)="login()" [formGroup]="credentials">
-    <ion-item fill="solid" class="ion-margin-bottom">
-      <ion-label position="floating" color="primary">Email</ion-label>
-      <ion-input type="email" formControlName="username"></ion-input>
-      <ion-note slot="error" *ngIf="(username.dirty || username.touched) && username.errors">Email invalide</ion-note>
-    </ion-item>
-    <ion-item fill="solid" class="ion-margin-bottom">
-      <ion-label position="floating" color="primary">Mot de passe</ion-label>
-      <ion-input type="password" formControlName="password"></ion-input>
-      <!-- <ion-note slot="error" *ngIf="(password.dirty || password.touched) && password.errors">6 caractères minimum</ion-note> -->
-      <!-- <ion-note slot="error" *ngIf="(password.dirty || password.touched) && password.errors">6 caractères minimum</ion-note> -->
-      <!-- <div class="meta-container"> -->
-        <ng-container *ngFor="let validation of validation_messages.password">
-          <ion-note
-            slot="error"
-            class="error-message"
-            *ngIf="this.credentials.get('password').hasError(validation.type) && (password.dirty || password.touched)"
+          <ion-button expand="block" shape="round" color="doinsport" type="submit" [disabled]="!credentials.valid"
+            >Se connecter</ion-button
           >
-            <ion-icon name="warning-outline"></ion-icon>
-            <span>{{ validation.message }}</span>
-          </ion-note>
-        </ng-container>
-      <!-- </div> -->
-    </ion-item>
+          <hr />
+          <ion-button expand="block" color="doinsport" shape="round" fill="outline" (click)="signUp()">S'inscrire</ion-button>
 
-    <ion-button type="submit" expand="block" [disabled]="!credentials.valid">Se connecter</ion-button>
-    <hr />
-    <ion-button expand="block" color="secondary" (click)="signUp()">Créer un compte</ion-button>
-    <!-- <ion-button expand="block" color="tertiary" [routerLink]="['/login/password-lost']" routerLinkActive="router-link-active" >Mot de passe oublié</ion-button> -->
-  </form>
+          <hr />
+          <!-- <ion-item class="input-item-frame"> -->
+          <ion-grid class="adresse-grid" fixed="true">
+            <ion-row class="ion-no-margin">
+              <ion-col size="6" class="ion-no-padding">
+                <ion-item class="checkbox-item" lines="none">
+                  <ion-checkbox slot="start" checked formControlName="remember"  (ionChange)="onCheckRemeber($event)"></ion-checkbox>
+                  <ion-label>Se souvenir de moi</ion-label>
+                </ion-item>
+              </ion-col>
+              <ion-col size="6" class="ion-no-padding">
+                <ion-button
+                size="small"
+                  expand="block"
+                  fill="clear"
+                  color="medium"
+                  [routerLink]="['/lost-password']"
+                  routerLinkActive="router-link-active"
+                  >Mot de passe oublié</ion-button
+                >
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+          <!-- </ion-item> -->
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>

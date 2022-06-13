@@ -1,0 +1,64 @@
+@import "mixins/ion-color";
+
+// Add custom colors to use with [color] property
+// (see: https://forum.ionicframework.com/t/adding-custom-colours-to-use-with-color-property/136919)
+// GLOBAL COLORS:
+//    You can define new Ionic colors here (inside :root{ ... }) to be available within the entire app
+// LOCAL COLORS:
+//    You can also define new Ionic colors in each page (inside :host{ ... }) to be available just in that page
+
+:root {
+  @include ion-color("dark") {
+    --ion-color-dark: #222428;
+    --ion-color-dark-rgb: 34, 36, 40;
+    --ion-color-dark-contrast: #ffffff;
+    --ion-color-dark-contrast-rgb: 255, 255, 255;
+    --ion-color-dark-shade: #1e2023;
+    --ion-color-dark-tint: #383a3e;
+  }
+
+  @include ion-color("darkest") {
+    --ion-color-darkest: #000000;
+    --ion-color-darkest-rgb: 0, 0, 0;
+    --ion-color-darkest-contrast: #ffffff;
+    --ion-color-darkest-contrast-rgb: 255, 255, 255;
+    --ion-color-darkest-shade: #1e2023;
+    --ion-color-darkest-tint: #383a3e;
+  }
+
+  @include ion-color("lightest") {
+    --ion-color-lightest: #ffffff;
+    --ion-color-lightest-rgb: 255, 255, 255;
+    --ion-color-lightest-contrast: #000000;
+    --ion-color-lightest-contrast-rgb: 0, 0, 0;
+    --ion-color-lightest-shade: #d7d8da;
+    --ion-color-lightest-tint: #f5f6f9;
+  }
+
+  @include ion-color("facebook") {
+    --ion-color-facebook: #3b5998;
+    --ion-color-facebook-rgb: 59, 89, 152;
+    --ion-color-facebook-contrast: #ffffff;
+    --ion-color-facebook-contrast-rgb: 255, 255, 255;
+    --ion-color-facebook-shade: #344e86;
+    --ion-color-facebook-tint: #4f6aa2;
+  }
+
+  @include ion-color("google") {
+    --ion-color-google: #cc181e;
+    --ion-color-google-rgb: 204, 24, 30;
+    --ion-color-google-contrast: #ffffff;
+    --ion-color-google-contrast-rgb: 255, 255, 255;
+    --ion-color-google-shade: #b4151a;
+    --ion-color-google-tint: #d12f35;
+  }
+
+  @include ion-color("doinsport") {
+    --ion-color-doinsport: #052b80;
+    --ion-color-doinsport-rgb: 5, 43, 128;
+    --ion-color-doinsport-contrast: #ffffff;
+    --ion-color-doinsport-contrast-rgb: 255, 255, 255;
+    --ion-color-doinsport-shade: #042671;
+    --ion-color-doinsport-tint: #1e408d;
+  }
+}

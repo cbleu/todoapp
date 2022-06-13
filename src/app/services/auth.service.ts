@@ -42,7 +42,7 @@ export class AuthService {
   // Sign in a user and store access and refres token
   login(credentials: { username; password }): Observable<any> {
     console.log('AuthService ~ login ~ credentials', credentials);
-    return this.http.post(`${this.url}/auth`, credentials).pipe(
+    return this.http.post(`${this.url}/auth/signin`, credentials).pipe(
       switchMap((tokens: { accessToken; refreshToken }) => {
         console.log('AuthService ~ switchMap ~ tokens', tokens);
         this.currentAccessToken = tokens.accessToken;
@@ -97,7 +97,7 @@ export class AuthService {
             }),
           };
           console.log('AuthService ~ switchMap ~ httpOptions', httpOptions);
-          return this.http.get(`${this.url}/auth/refresh`, httpOptions);
+          return this.http.get(`${this.url}/auth/refresh-token`, httpOptions);
         } else {
           // No stored refresh token
           return of(null);
@@ -113,8 +113,19 @@ export class AuthService {
     return from(Storage.set({ key: ACCESS_TOKEN_KEY, value: accessToken }));
   }
 
-  // Get our secret protected data
-  getSecretData() {
-    return this.http.get(`${this.url}/users/secret`);
+  getMe() {
+    return this.http.get(`${this.url}/me`);
   }
+
+  getTodos() {
+    return this.http.get(`${this.url}/todos`);
+  }
+
+    // Create new user
+  postTodo(todo: { label }): Observable<any> {
+      console.log('AuthService ~ postTodo ~ todo', todo);
+      return this.http.post(`${this.url}/todo`, todo);
+    }
+
+
 }

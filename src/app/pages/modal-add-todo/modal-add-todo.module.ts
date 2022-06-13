@@ -4,9 +4,9 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { IonicModule } from '@ionic/angular';
 
-import { HomePageRoutingModule } from './home-routing.module';
+import { ModalAddTodoPageRoutingModule } from './modal-add-todo-routing.module';
 
-import { HomePage } from './home.page';
+import { ModalAddTodoPage } from './modal-add-todo.page';
 
 @NgModule({
   imports: [
@@ -14,8 +14,8 @@ import { HomePage } from './home.page';
     FormsModule,
     IonicModule,
     ReactiveFormsModule,
-    HomePageRoutingModule
+    ModalAddTodoPageRoutingModule
   ],
-  declarations: [HomePage]
+  declarations: [ModalAddTodoPage]
 })
-export class HomePageModule {}
+export class ModalAddTodoPageModule {}
