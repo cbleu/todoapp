@@ -1,9 +1,58 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>login</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Enregistrement - Connexion</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<!-- <ion-content class="loginpage-content">
+  <form (ngSubmit)="login()" [formGroup]="credentials">
+    <div class="input-group">
+      <ion-item>
+        <ion-input placeholder="Username" formControlName="username"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
+      </ion-item>
+    </div>
 
+    <ion-button type="submit" expand="block" [disabled]="!credentials.valid">Log in</ion-button>
+    <ion-button type="button" expand="block" (click)="signUp()" color="secondary">Sign up!
+    </ion-button>
+  </form>
+</ion-content> -->
+
+<ion-content class="ion-padding loginpage-content">
+  <form (ngSubmit)="login()" [formGroup]="credentials">
+    <ion-item fill="solid" class="ion-margin-bottom">
+      <ion-label position="floating" color="primary">Email</ion-label>
+      <ion-input type="email" formControlName="username"></ion-input>
+      <ion-note slot="error" *ngIf="(username.dirty || username.touched) && username.errors">Email invalide</ion-note>
+    </ion-item>
+    <ion-item fill="solid" class="ion-margin-bottom">
+      <ion-label position="floating" color="primary">Mot de passe</ion-label>
+      <ion-input type="password" formControlName="password"></ion-input>
+      <!-- <ion-note slot="error" *ngIf="(password.dirty || password.touched) && password.errors">6 caractères minimum</ion-note> -->
+      <!-- <ion-note slot="error" *ngIf="(password.dirty || password.touched) && password.errors">6 caractères minimum</ion-note> -->
+      <!-- <div class="meta-container"> -->
+        <ng-container *ngFor="let validation of validation_messages.password">
+          <ion-note
+            slot="error"
+            class="error-message"
+            *ngIf="this.credentials.get('password').hasError(validation.type) && (password.dirty || password.touched)"
+          >
+            <ion-icon name="warning-outline"></ion-icon>
+            <span>{{ validation.message }}</span>
+          </ion-note>
+        </ng-container>
+      <!-- </div> -->
+    </ion-item>
+
+    <ion-button type="submit" expand="block" [disabled]="!credentials.valid">Se connecter</ion-button>
+    <hr />
+    <ion-button expand="block" color="secondary" (click)="signUp()">Créer un compte</ion-button>
+    <!-- <ion-button expand="block" color="tertiary" [routerLink]="['/login/password-lost']" routerLinkActive="router-link-active" >Mot de passe oublié</ion-button> -->
+  </form>
 </ion-content>
