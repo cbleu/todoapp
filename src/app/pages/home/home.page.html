@@ -9,17 +9,54 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-button (click)="getMe()" expand="block" fill="solid" shape="round"> me </ion-button>
-  <ion-button (click)="getTodos()" expand="block" fill="solid" shape="round"> me </ion-button>
-  <ion-button (click)="presentModal()" expand="block" fill="solid" shape="round"> modal </ion-button>
+<ion-content class="todos-content">
+  <!-- <ion-button (click)="getMe()" expand="block" fill="solid" shape="round"> me </ion-button>
+  <ion-button (click)="getTodos()" expand="block" fill="solid" shape="round"> me </ion-button> -->
+  <!-- <ion-button (click)="presentModal()" expand="block" fill="solid" shape="round"> modal </ion-button> -->
+  <!-- <h2>Todo Label: {{ todoLabel }}</h2> -->
 
-  <h2>Todo Label: {{ todoLabel }}</h2>
+  <div class="content-container">
+    <div class="searchbar">
+      <ion-item class="search-item">
+        <ion-icon slot="start" name="search"></ion-icon>
+        <ion-label>rechercher</ion-label>
+      </ion-item>
+      <ion-button color="doinsport" (click)="presentModal()">
+        <ion-icon slot="start" name="add"></ion-icon>
+        Nouveau
+      </ion-button>
+    </div>
 
-  <!-- Sheet Modal -->
-  <!-- <ion-modal #modalcontent [isOpen]="true" [breakpoints]="[ 0.7]" [initialBreakpoint]="0.7">
-    <ng-template>
-      <ion-content>Ajouter un TODO</ion-content>
-    </ng-template>
-  </ion-modal> -->
+    <ion-card class="simple">
+      <!-- <ion-card-header>
+        <ion-card-subtitle>Awesome Subtitle</ion-card-subtitle>
+        <ion-card-title>Awesome Title</ion-card-title>
+      </ion-card-header> -->
+      <ion-card-content>
+        <ion-list class="items-list ion-no-padding" *ngIf="todoList.length > 0">
+          <ion-item-group *ngFor="let groupedTodos of todoList | groupByMonth" >
+            <ion-item-divider color="light" sticky="true"> {{ groupedTodos.key }} </ion-item-divider>
+            <ion-item
+              lines="none"
+              detail="false"
+              mode="ios"
+              *ngFor="let todo of groupedTodos.list"
+              appDebounceClick
+              (debounceClick)="selectTodo(todo)"
+            >
+              <ion-checkbox slot="start"></ion-checkbox>
+              <ion-label>
+                <p class="ticket-desc">{{todo.label}}</p>
+                <!-- <div class="dev">{{todo.id}}</div> -->
+              </ion-label>
+              <div class="date" slot="end">
+                <ion-icon src="/assets/icon/calendar-regular.svg"></ion-icon>
+                <p color="medium">{{todo.updatedAt | date: 'd/MM/YYYY'}}</p>
+              </div>
+            </ion-item>
+          </ion-item-group>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>

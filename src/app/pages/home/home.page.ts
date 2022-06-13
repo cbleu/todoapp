@@ -15,6 +15,8 @@ export class HomePage implements OnInit {
   secretData = null;
   currentModal = null;
   todoLabel: string;
+  // todoList = { items<Array>: [], count: 0 };
+  todoList:Array<any> = [];
 
   constructor(
     private authService: AuthService,
@@ -23,7 +25,14 @@ export class HomePage implements OnInit {
     private actionSheetCtrl: ActionSheetController
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.authService.getTodos().subscribe((res: any) => {
+      console.log('HomePage ~ this.authService.getTodos ~ res', res);
+      // this.todoList = { items: res.rows, count: res.count };
+      this.todoList = res.rows;
+      console.log('HomePage ~ this.authService.getTodos ~ this.todoList', this.todoList);
+    });
+  }
 
   logout() {
     this.authService.logout();
@@ -74,5 +83,9 @@ export class HomePage implements OnInit {
       console.log('HomePage ~ modal.onDidDismiss');
       mySubject.unsubscribe();
     });
+  }
+
+  selectTodo(todo) {
+    console.log('HomePage ~ todo', todo);
   }
 }
