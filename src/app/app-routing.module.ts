@@ -22,11 +22,6 @@ const routes: Routes = [
     canLoad: [AuthGuard],
   },
   {
-    path: 'detail',
-    loadChildren: () => import('./pages/detail/detail.module').then((m) => m.DetailPageModule),
-    canLoad: [AuthGuard],
-  },
-  {
     path: 'modal-add-todo',
     loadChildren: () => import('./pages/modal-add-todo/modal-add-todo.module').then( m => m.ModalAddTodoPageModule)
   },

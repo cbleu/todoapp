@@ -1,4 +1,4 @@
-import { ModalController } from "@ionic/angular";
+import { ModalController } from '@ionic/angular';
 import { FormBuilder, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { Component, Input, OnInit } from '@angular/core';
@@ -9,30 +9,33 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./modal-add-todo.page.scss'],
 })
 export class ModalAddTodoPage implements OnInit {
-  todoForm;
-  todoLabel = '';
   @Input() mySubject: BehaviorSubject<string>;
+  @Input() checkSubject: BehaviorSubject<boolean>;
+
+  todoForm;
 
   constructor(private fb: FormBuilder, private modalCtrl: ModalController) {}
 
-  // ionViewWillLeave() {
-  //   console.log('ModalAddTodoPage ~ ionViewWillLeave ~ this.todoForm.value.label', this.todoForm.value.label);
-  //   this.mySubject.next(this.todoForm.value.label);
-  // }
-
   ngOnInit() {
     const preselect = this.mySubject.value;
-    console.log('ModalAddTodoPage ~ ngOnInit ~ preselect', preselect);
+    const isDone = this.checkSubject.value;
 
     this.todoForm = this.fb.group({
       label: [preselect, Validators.required],
+      done: [isDone],
     });
   }
+  onCheckTodo(value) {
+    console.log('ModalAddTodoPage ~ value', value);
+    }
 
   sendForm() {
-    console.log('ModalAddTodoPage ~ sendForm ~ this.todoForm.value.label', this.todoForm.value.label);
+    console.log('ModalAddTodoPage ~ sendForm ~ this.todoForm.value', this.todoForm.value);
+    this.checkSubject.next(this.todoForm.value.done);
     this.mySubject.next(this.todoForm.value.label);
+    this.closeModal();
+  }
+  closeModal() {
     this.modalCtrl.dismiss();
-
   }
 }

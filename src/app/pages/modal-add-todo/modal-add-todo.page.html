@@ -1,29 +1,40 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>modal-add-todo</ion-title>
+    <ion-title>Ajouter un TODO</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <form (ngSubmit)="sendForm()" [formGroup]="todoForm">
-    <ion-item class="input-item item-lines-none">
-      <ion-textarea
-        class="label-input"
-        type="text"
-        rows="4"
-        cols="12"
-        placeholder="Ajouter une nouvelle tâche à réaliser ..."
-        formControlName="label"
-        autoGrow="on"
-        spellcheck="on"
-        autocapitalize="off"
-        inputmode="text"
-        enterkeyhint="next"
-      ></ion-textarea>
-    </ion-item>
+  <div class="modal-content">
+    <form (ngSubmit)="sendForm()" [formGroup]="todoForm">
+      <ion-card>
+        <ion-card-content>
+          <ion-textarea
+            class="label-input"
+            type="text"
+            rows="4"
+            cols="10"
+            placeholder="Ajouter une nouvelle tâche à réaliser ..."
+            formControlName="label"
+            autoGrow="on"
+            spellcheck="on"
+            autocapitalize="off"
+            inputmode="text"
+          ></ion-textarea>
+          <hr />
+          <ion-item lines="none">
+            <ion-checkbox slot="start" formControlName="done" (ionChange)="onCheckTodo(todoForm.value)"></ion-checkbox>
+            <ion-label>Tâche terminée</ion-label>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
 
-    <ion-button color="doinsport" (click)="sendForm()" expand="block" fill="solid">
-      Enregistrer
-    </ion-button>
-  </form>
+      <ion-button color="doinsport" (click)="sendForm()" expand="block" fill="solid"> Enregistrer </ion-button>
+    </form>
+  </div>
 </ion-content>

@@ -1,25 +1,112 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar color="lightest">
     <ion-title>Mes todos</ion-title>
-    <ion-buttons slot="end">
+    <ion-buttons slot="start">
       <ion-button (click)="logout()">
-        <ion-icon slot="icon-only" name="log-out"></ion-icon>
+        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-button (click)="getMe()" expand="block" fill="solid" shape="round"> me </ion-button>
-  <ion-button (click)="getTodos()" expand="block" fill="solid" shape="round"> me </ion-button>
-  <ion-button (click)="presentModal()" expand="block" fill="solid" shape="round"> modal </ion-button>
+<ion-content class="todos-content">
+  <div class="content-container">
+    <div class="top-bar">
+      <ion-searchbar
+        placeholder="Rechercher"
+        inputmode="text"
+        type="text"
+        showClearButton="focus"
+        showCancelButton="never"
+        (ionChange)="onSearchChange($event)"
+        [debounce]="500"
+      ></ion-searchbar>
+      <ion-button color="doinsport" (click)="presentModal()">
+        <ion-icon slot="start" name="add"></ion-icon>
+        Nouveau
+      </ion-button>
+    </div>
 
-  <h2>Todo Label: {{ todoLabel }}</h2>
+    <ion-card class="simple">
+      <ion-item>
+        <ion-icon name="checkbox-outline" slot="start"></ion-icon>
+        <ion-label>Sélectionner une période</ion-label>
+        <ion-label class="date-range" slot="end">
+          <ion-button id="open-modal-start" expand="block" fill="outline">
+            {{(startDate | date: 'dd/MM/YYYY') || '--/--/----'}}
+          </ion-button>
+          <ion-button id="open-modal-end" expand="block" fill="outline">
+            {{(endDate | date: 'dd/MM/YYYY') || '--/--/----'}}
+          </ion-button>
+        </ion-label>
+      </ion-item>
 
-  <!-- Sheet Modal -->
-  <!-- <ion-modal #modalcontent [isOpen]="true" [breakpoints]="[ 0.7]" [initialBreakpoint]="0.7">
-    <ng-template>
-      <ion-content>Ajouter un TODO</ion-content>
-    </ng-template>
-  </ion-modal> -->
+      <ion-modal trigger="open-modal-start">
+        <ng-template>
+          <ion-content scrollY="false">
+            <ion-datetime
+              #datetimemodal
+              first-day-of-week="1"
+              [value]="startDate"
+              size="cover"
+              [max]="endDate"
+              presentation="date"
+              (ionChange)="modalStartDateChanged(datetimemodal.value)"
+            >
+              <ion-buttons slot="buttons">
+                <ion-button (click)="closePicker()">Fermer</ion-button>
+                <ion-button (click)="confirmPicker()" color="primary">Valider le début</ion-button>
+              </ion-buttons>
+            </ion-datetime>
+          </ion-content>
+        </ng-template>
+      </ion-modal>
+
+      <ion-modal trigger="open-modal-end">
+        <ng-template>
+          <ion-content scrollY="false">
+            <ion-datetime
+              #datetimemodal
+              locale="fr-FR"
+              first-day-of-week="1"
+              [value]="endDate"
+              size="cover"
+              [min]="startDate"
+              presentation="date"
+              (ionChange)="modalEndDateChanged(datetimemodal.value)"
+            >
+              <ion-buttons slot="buttons">
+                <ion-button (click)="closePicker()">Fermer</ion-button>
+                <ion-button (click)="confirmPicker()" color="primary">Valider la fin</ion-button>
+              </ion-buttons>
+            </ion-datetime>
+          </ion-content>
+        </ng-template>
+      </ion-modal>
+
+      <ion-card-content>
+        <ion-list class="items-list ion-no-padding" *ngIf="todoList.length > 0">
+          <ion-item-group *ngFor="let groupedTodos of displayedList$.value | groupByMonth">
+            <ion-item-divider color="light" sticky="true"> {{ groupedTodos.key }} </ion-item-divider>
+            <ion-item-sliding *ngFor="let todo of groupedTodos.list" #slidingItem>
+              <ion-item class="todo-item" lines="none" detail="false" mode="ios" appDebounceClick (debounceClick)="selectTodo(todo)">
+                <ion-checkbox slot="start"></ion-checkbox>
+                <ion-label>
+                  <p class="todo-label">{{todo.label}}</p>
+                  <!-- <div class="dev">{{todo.id}}</div> -->
+                </ion-label>
+                <div class="date" slot="end">
+                  <ion-icon src="/assets/icon/calendar-regular.svg"></ion-icon>
+                  <p color="medium">{{todo.updatedAt | date: 'dd/MM/YYYY'}}</p>
+                </div>
+              </ion-item>
+              <ion-item-options side="end">
+                <ion-item-option color="danger" (click)="deleteTodo(slidingItem, todo)">Effacer</ion-item-option>
+              </ion-item-options>
+            </ion-item-sliding>
+          </ion-item-group>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>
