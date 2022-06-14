@@ -1,8 +1,10 @@
 # README
 
-## initialiisation
+## initialisation
 
 ```bash
+ionic start todoapp blank --type=angular
+
 ionic g service services/auth
 
 ionic g guard guards/auth --implements CanLoad
@@ -19,4 +21,5 @@ ionic g directive directives/debounce-click
 npm install @capacitor/storage
 npm install @auth0/angular-jwt
 npm install dayjs
+
 ````
