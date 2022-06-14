@@ -15,7 +15,6 @@
             <ion-label position="floating" color="primary">Email</ion-label>
             <ion-input type="email" formControlName="username"></ion-input>
             <ion-icon class="input-icon" slot="end" name="mail"></ion-icon>
-            <!-- <ion-note slot="error" *ngIf="(username.dirty || username.touched) && username.errors">Email invalide</ion-note> -->
             <ng-container *ngFor="let validation of validation_messages.username">
               <ion-note
                 slot="error"
@@ -47,21 +46,33 @@
             >Se connecter</ion-button
           >
           <hr />
-          <ion-button expand="block" color="doinsport" shape="round" fill="outline" (click)="signUp()">S'inscrire</ion-button>
+          <ion-button
+            expand="block"
+            color="doinsport"
+            shape="round"
+            fill="outline"
+            [disabled]="!credentials.valid"
+            (click)="signUp()"
+            >S'inscrire</ion-button
+          >
 
           <hr />
-          <!-- <ion-item class="input-item-frame"> -->
           <ion-grid class="adresse-grid" fixed="true">
             <ion-row class="ion-no-margin">
               <ion-col size="6" class="ion-no-padding">
                 <ion-item class="checkbox-item" lines="none">
-                  <ion-checkbox slot="start" checked formControlName="remember"  (ionChange)="onCheckRemeber($event)"></ion-checkbox>
+                  <ion-checkbox
+                    slot="start"
+                    checked
+                    formControlName="remember"
+                    (ionChange)="onCheckRemeber($event)"
+                  ></ion-checkbox>
                   <ion-label>Se souvenir de moi</ion-label>
                 </ion-item>
               </ion-col>
               <ion-col size="6" class="ion-no-padding">
                 <ion-button
-                size="small"
+                  size="small"
                   expand="block"
                   fill="clear"
                   color="medium"
@@ -72,7 +83,6 @@
               </ion-col>
             </ion-row>
           </ion-grid>
-          <!-- </ion-item> -->
         </form>
       </ion-card-content>
     </ion-card>

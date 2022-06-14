@@ -58,14 +58,9 @@ ion-content.todos-content {
   }
 
   .content-container {
-    // border-radius: 10px 70px 0px 0px;
     margin: var(--page-margin);
-    // margin-top: 130px;
-    // padding-top: 30px;
     padding-bottom: var(--page-padding);
     min-height: 100%;
-    // background: var(--ion-color-light);
-    // box-shadow: var(--page-content-maintabs-shadow);
   }
 
   .top-bar {
@@ -82,10 +77,6 @@ ion-content.todos-content {
       --background: var(--ion-color-lightest);
       --box-shadow: inset -2px 2px 4px 0px rgb(0 0 0 / 16%);
       --border-radius: 8px;
-      // .searchbar-input-container {
-      //   box-shadow: inset -4px 4px 4px 0px rgb(0 0 0 / 12%);
-      //   border-radius: 8px;
-      // }
     }
     ion-button {
       max-height: 36px;
@@ -93,49 +84,9 @@ ion-content.todos-content {
       margin: 0;
     }
   }
-  // .search-item {
-  //   flex-grow: 1;
-  // }
 
   .date-range {
     min-width: 50%;
-  }
-  ion-item.app-item-round-card {
-    --background: var(--ion-color-lightest);
-    --min-height: 72px;
-    --padding-start: 8px;
-    margin: var(--page-margin);
-    border-radius: 40px;
-    box-shadow: var(--page-hard-shadow);
-    ion-thumbnail {
-      --border-radius: 30px;
-      --size: 56px;
-      margin-inline: 0px 8px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 35px;
-      color: var(--ion-color-primary);
-      background: aliceblue;
-    }
-    ion-label {
-      h3 {
-        display: inline-flex;
-        align-items: center;
-        min-width: 100%;
-        width: 100%;
-        justify-content: space-between;
-        span {
-          min-width: 40%;
-          ion-button {
-            height: 20px;
-          }
-        }
-      }
-      p {
-        font-size: 12px;
-      }
-    }
   }
 
   ion-item-divider {
@@ -190,6 +141,13 @@ ion-content.todos-content {
             font-weight: 400;
             margin-bottom: 10px;
           }
+        }
+      }
+    }
+    ion-item.todo-item {
+      ion-label {
+        .todo-label {
+          color: var(--ion-color-dark);
         }
       }
     }

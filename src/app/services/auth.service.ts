@@ -55,24 +55,26 @@ export class AuthService {
   // Sign in a user and store access and refres token
   login(credentials: { username; password }): Observable<any> {
     console.log('AuthService ~ login ~ credentials', credentials);
-    return this.http.post(`${this.url}/auth/signin`, credentials).pipe(
-      switchMap((tokens: { accessToken; refreshToken }) => {
-        console.log('AuthService ~ switchMap ~ tokens', tokens);
-        this.currentAccessToken = tokens.accessToken;
-        const storeAccess = Storage.set({
-          key: ACCESS_TOKEN_KEY,
-          value: tokens.accessToken,
-        });
-        const storeRefresh = Storage.set({
-          key: REFRESH_TOKEN_KEY,
-          value: tokens.refreshToken,
-        });
-        return from(Promise.all([storeAccess, storeRefresh]));
-      }),
-      tap((_) => {
-        this.isAuthenticated.next(true);
-      })
-    );
+    return this.http
+      .post(`${this.url}/auth/signin`, credentials)
+      .pipe(
+         switchMap((tokens: { accessToken; refreshToken }) => {
+          console.log('AuthService ~ switchMap ~ tokens', tokens);
+          this.currentAccessToken = tokens.accessToken;
+          const storeAccess = Storage.set({
+            key: ACCESS_TOKEN_KEY,
+            value: tokens.accessToken,
+          });
+          const storeRefresh = Storage.set({
+            key: REFRESH_TOKEN_KEY,
+            value: tokens.refreshToken,
+          });
+          return from(Promise.all([storeAccess, storeRefresh]));
+        }),
+        tap((_) => {
+          this.isAuthenticated.next(true);
+        })
+      )
   }
 
   // Potentially perform a logout operation inside your API
@@ -94,6 +96,14 @@ export class AuthService {
         })
       )
       .subscribe();
+  }
+
+  fakeLogout() {
+    // Remove all stored tokens
+    Storage.remove({ key: ACCESS_TOKEN_KEY });
+    Storage.remove({ key: REFRESH_TOKEN_KEY });
+    this.isAuthenticated.next(false);
+    this.router.navigateByUrl('/login', { replaceUrl: true });
   }
 
   // Load the refresh token from storage
@@ -131,38 +141,46 @@ export class AuthService {
   }
 
   getTodos() {
-    return this.http.get(`${this.url}/todos`).pipe(tap((res) => {
-      this.todoList$.next(res);
-      // console.log('AuthService ~ getTodos tap ~ this.todoList$', this.todoList$.value);
-    }));
+    return this.http.get(`${this.url}/todos`).pipe(
+      tap((res) => {
+        this.todoList$.next(res);
+        // console.log('AuthService ~ getTodos tap ~ this.todoList$', this.todoList$.value);
+      })
+    );
   }
 
   // Create new todo
   // postTodo(todo: { label }): Observable<any> {
   postTodo(todo: todoItem): Observable<any> {
     console.log('AuthService ~ postTodo ~ todo', todo);
-    return this.http.post(`${this.url}/todo`, todo).pipe(tap((res) => {
-      console.log('AuthService ~ postTodo tap ~ res', res);
-      this.todoEvent$.next(true);
-      // this.todoList$.value.rows.push(todo);
-      // this.todoList$.next(res);
-      }));
+    return this.http.post(`${this.url}/todo`, todo).pipe(
+      tap((res) => {
+        console.log('AuthService ~ postTodo tap ~ res', res);
+        this.todoEvent$.next(true);
+        // this.todoList$.value.rows.push(todo);
+        // this.todoList$.next(res);
+      })
+    );
   }
 
   // Update  todo
   putTodo(todo: todoItem, id): Observable<any> {
     console.log('AuthService ~ putTodo ~ todo', todo, id);
-    return this.http.put(`${this.url}/todo/:${id}`, todo).pipe(tap((res) => {
-      console.log('AuthService ~ putTodo tap ~ res', res);
-      this.todoEvent$.next(true);
-      }));
+    return this.http.put(`${this.url}/todo/:${id}`, todo).pipe(
+      tap((res) => {
+        console.log('AuthService ~ putTodo tap ~ res', res);
+        this.todoEvent$.next(true);
+      })
+    );
   }
 
   // Delete todo
   deleteTodo(id): Observable<any> {
-    return this.http.delete(`${this.url}/todo/:${id}`).pipe(tap((res) => {
-      console.log('AuthService ~ deleteTodo tap ~ res', res);
-      this.todoEvent$.next(true);
-      }));
+    return this.http.delete(`${this.url}/todo/:${id}`).pipe(
+      tap((res) => {
+        console.log('AuthService ~ deleteTodo tap ~ res', res);
+        this.todoEvent$.next(true);
+      })
+    );
   }
 }

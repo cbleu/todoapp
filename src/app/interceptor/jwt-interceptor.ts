@@ -31,7 +31,8 @@ export class JwtInterceptor implements HttpInterceptor {
               case 401:
                 return this.handle401Error(request, next);
               default:
-                return throwError(() => new Error(err.message));
+                console.log("error", err);
+                return throwError(() => new Error(err.error.message));
             }
           } else {
             // return throwError(err);

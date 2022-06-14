@@ -58,10 +58,11 @@ export class LoginPage implements OnInit {
         this.router.navigateByUrl('/home', { replaceUrl: true });
       },
       async (res) => {
+        console.log('LoginPage ~ Login Failed', res.message);
         await loading.dismiss();
         const alert = await this.alertController.create({
-          header: 'Login failed',
-          message: res.error.msg,
+          header: 'La connexion a échoué',
+          message: res.message,
           buttons: ['OK'],
         });
         await alert.present();
@@ -79,11 +80,11 @@ export class LoginPage implements OnInit {
         this.login();
       },
       async (res) => {
-        console.log('LoginPage ~ res', res);
+        console.log('LoginPage ~ Signup Failed', res.message);
         await loading.dismiss();
         const alert = await this.alertController.create({
-          header: 'Signup failed',
-          message: res.error.msg,
+          header: "L'enregistrement a échoué",
+          message: res.message,
           buttons: ['OK'],
         });
         await alert.present();
