@@ -85,8 +85,30 @@ ion-content.todos-content {
     }
   }
 
-  .date-range {
-    min-width: 50%;
+  ion-item.select-range{
+    --padding-start: 18px;
+    ion-icon{
+      font-size: 16px;
+      margin-right: 4px;
+    }
+    ion-label{
+      font-size: 12px;
+      margin-right: 2px;
+    }
+    .date-range {
+      min-width: 40%;
+      display: flex;
+      margin-left: 4px;
+      margin-right: 4px;
+      ion-button{
+        --padding-start: 2px;
+        --padding-end: 2px;
+        min-width: 70px;
+        border: none;
+        border-bottom: 1px solid var(--ion-color-dark);
+        border-bottom: 1px;
+      }
+    }
   }
 
   ion-item-divider {

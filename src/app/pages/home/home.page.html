@@ -28,15 +28,15 @@
     </div>
 
     <ion-card class="simple">
-      <ion-item>
+      <ion-item class="select-range">
         <ion-icon name="checkbox-outline" slot="start"></ion-icon>
         <ion-label>Sélectionner une période</ion-label>
         <ion-label class="date-range" slot="end">
-          <ion-button id="open-modal-start" expand="block" fill="outline">
-            {{(startDate | date: 'dd/MM/YYYY') || '--/--/----'}}
+          <ion-button id="open-modal-start" expand="block" fill="outline" color="dark">
+            {{(startDate | date: 'dd/MM/YYYY') || '-- / -- / ----'}}
           </ion-button>
-          <ion-button id="open-modal-end" expand="block" fill="outline">
-            {{(endDate | date: 'dd/MM/YYYY') || '--/--/----'}}
+          <ion-button id="open-modal-end" expand="block" fill="outline" color="dark">
+            {{(endDate | date: 'dd/MM/YYYY') || '-- / -- / ----'}}
           </ion-button>
         </ion-label>
       </ion-item>
