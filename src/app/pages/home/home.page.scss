@@ -8,6 +8,25 @@
   --page-hard-shadow: var(--app-hard-shadow);
 }
 
+ion-modal {
+  --background: rgba(44, 39, 45, 0.2);
+
+  &::part(content) {
+    backdrop-filter: blur(6px);
+  }
+
+  ion-content {
+    --padding-top: 25vh;
+    --padding-start: 20px;
+    --padding-end: 20px;
+    --background: transparent;
+
+    ion-datetime {
+      border-radius: 8px;
+    }
+  }
+}
+
 ion-toolbar {
   --background: var(--page-background);
   ion-title {
@@ -49,13 +68,38 @@ ion-content.todos-content {
     // box-shadow: var(--page-content-maintabs-shadow);
   }
 
-  .searchbar {
+  .top-bar {
     display: flex;
-  }
-  .search-item {
-    flex-grow: 1;
-  }
+    align-items: center;
 
+    ion-searchbar {
+      -webkit-padding-start: 0px;
+      padding-inline-start: 0px;
+      -webkit-padding-end: 0px;
+      padding-inline-end: 0px;
+      padding-top: 0px;
+      padding-bottom: 0px;
+      --background: var(--ion-color-lightest);
+      --box-shadow: inset -2px 2px 4px 0px rgb(0 0 0 / 16%);
+      --border-radius: 8px;
+      // .searchbar-input-container {
+      //   box-shadow: inset -4px 4px 4px 0px rgb(0 0 0 / 12%);
+      //   border-radius: 8px;
+      // }
+    }
+    ion-button {
+      max-height: 36px;
+      padding: 0 0 0 8px;
+      margin: 0;
+    }
+  }
+  // .search-item {
+  //   flex-grow: 1;
+  // }
+
+  .date-range {
+    min-width: 50%;
+  }
   ion-item.app-item-round-card {
     --background: var(--ion-color-lightest);
     --min-height: 72px;
@@ -109,12 +153,12 @@ ion-content.todos-content {
       }
     }
 
-    ion-card-content{
+    ion-card-content {
       padding-inline-start: 0px;
       padding-inline-end: 0px;
       padding-inline-end: 0px;
-
     }
+
     ion-item {
       --background: initial;
 

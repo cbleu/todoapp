@@ -15,7 +15,7 @@ export class GroupByMonthPipe implements PipeTransform {
 
     value.forEach((obj: any) => {
       const formatedObj = dayjs(obj[groupByKey]).format('MMMM YYYY');
-      console.log('GroupByMonthPipe ~ value.forEach ~ formatedObj', formatedObj);
+      // console.log('GroupByMonthPipe ~ value.forEach ~ formatedObj', formatedObj);
       if (!(formatedObj in groupedElements)) {
         groupedElements[formatedObj] = [];
       }
@@ -30,8 +30,7 @@ export class GroupByMonthPipe implements PipeTransform {
         });
       }
     }
-    console.log('GroupByPipe ~ transform ~ groupedList', groupedList);
-
+    // console.log('GroupByMonthPipe ~ transform ~ groupedList', groupedList);
     return groupedList;
   }
 

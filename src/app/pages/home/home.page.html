@@ -10,17 +10,17 @@
 </ion-header>
 
 <ion-content class="todos-content">
-  <!-- <ion-button (click)="getMe()" expand="block" fill="solid" shape="round"> me </ion-button>
-  <ion-button (click)="getTodos()" expand="block" fill="solid" shape="round"> me </ion-button> -->
-  <!-- <ion-button (click)="presentModal()" expand="block" fill="solid" shape="round"> modal </ion-button> -->
-  <!-- <h2>Todo Label: {{ todoLabel }}</h2> -->
-
   <div class="content-container">
-    <div class="searchbar">
-      <ion-item class="search-item">
-        <ion-icon slot="start" name="search"></ion-icon>
-        <ion-label>rechercher</ion-label>
-      </ion-item>
+    <div class="top-bar">
+      <ion-searchbar
+        placeholder="Rechercher"
+        inputmode="text"
+        type="text"
+        showClearButton="focus"
+        showCancelButton="never"
+        (ionChange)="onSearchChange($event)"
+        [debounce]="500"
+      ></ion-searchbar>
       <ion-button color="doinsport" (click)="presentModal()">
         <ion-icon slot="start" name="add"></ion-icon>
         Nouveau
@@ -32,28 +32,119 @@
         <ion-card-subtitle>Awesome Subtitle</ion-card-subtitle>
         <ion-card-title>Awesome Title</ion-card-title>
       </ion-card-header> -->
+      <!-- <ion-toolbar>
+        <ion-segment [(ngModel)]="selectedMode" scrollable>
+          <ion-segment-button [value]="mode" *ngFor="let mode of modes">
+            <ion-label>{{ mode }}</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-toolbar> -->
+
+      <!-- <ion-item (click)="showPicker = !showPicker;">
+        <ion-label
+          >Date
+          <p>Click me!</p>
+        </ion-label>
+        <ion-text slot="end">{{ formattedString }}</ion-text>
+      </ion-item>
+      <ion-datetime
+        *ngIf="showPicker"
+        #datetime
+        [value]="dateValue"
+        size="cover"
+        (ionChange)="dateChanged(datetime.value)"
+        (ionCancel)="showPicker = false;"
+        showDefaultButtons="true"
+      ></ion-datetime> -->
+
+      <ion-item id="open-modal">
+        <ion-icon name="checkbox-outline" slot="start"></ion-icon>
+        <ion-label>Sélectionner une période</ion-label>
+        <ion-label class="date-range" slot="end">
+          <ion-button id="open-modal-start" expand="block" fill="outline">
+            {{(startDate | date: 'dd/MM/YYYY') || '--/--/----'}}
+          </ion-button>
+          <ion-button id="open-modal-end" expand="block" fill="outline">
+            {{(endDate | date: 'dd/MM/YYYY') || '--/--/----'}}
+          </ion-button>
+        </ion-label>
+      </ion-item>
+
+      <!-- <ion-item id="open-modal">
+        <ion-icon icon="calendar-outline" slot="start" color="primary"></ion-icon>
+        <ion-label>Pick start date </ion-label>
+        <ion-text slot="end">{{ formattedString }}</ion-text>
+      </ion-item>
+      <ion-item id="open-modal">
+        <ion-icon icon="calendar-outline" slot="start" color="primary"></ion-icon>
+        <ion-label>Pick end date </ion-label>
+        <ion-text slot="end">{{ formattedString }}</ion-text>
+      </ion-item> -->
+
+      <ion-modal trigger="open-modal-start">
+        <ng-template>
+          <ion-content scrollY="false">
+            <ion-datetime
+              #datetimemodal
+              first-day-of-week="1"
+              [value]="startDate"
+              size="cover"
+              [max]="endDate? (endDate | date: 'YYYY-MM-dd') : undefined"
+              presentation="date"
+              (ionChange)="modalStartDateChanged(datetimemodal.value)"
+            >
+              <ion-buttons slot="buttons">
+                <ion-button (click)="close()">Fermer</ion-button>
+                <ion-button (click)="select()" color="primary">Valider le début</ion-button>
+              </ion-buttons>
+            </ion-datetime>
+          </ion-content>
+        </ng-template>
+      </ion-modal>
+
+      <ion-modal trigger="open-modal-end">
+        <ng-template>
+          <ion-content scrollY="false">
+            <ion-datetime
+              #datetimemodal
+              locale="fr-FR"
+              first-day-of-week="1"
+              [value]="endDate"
+              size="cover"
+              [min]="startDate? (startDate | date: 'YYYY-MM-dd') : getNow()"
+              presentation="date"
+              (ionChange)="modalEndDateChanged(datetimemodal.value)"
+            >
+              <ion-buttons slot="buttons">
+                <ion-button (click)="close()">Fermer</ion-button>
+                <ion-button (click)="select()" color="primary">Valider la fin</ion-button>
+              </ion-buttons>
+            </ion-datetime>
+          </ion-content>
+        </ng-template>
+      </ion-modal>
+
       <ion-card-content>
         <ion-list class="items-list ion-no-padding" *ngIf="todoList.length > 0">
-          <ion-item-group *ngFor="let groupedTodos of todoList | groupByMonth" >
+          <!-- <ion-item-group *ngFor="let groupedTodos of filtered | groupByMonth"> -->
+          <ion-item-group *ngFor="let groupedTodos of displayedList$.value | groupByMonth">
             <ion-item-divider color="light" sticky="true"> {{ groupedTodos.key }} </ion-item-divider>
-            <ion-item
-              lines="none"
-              detail="false"
-              mode="ios"
-              *ngFor="let todo of groupedTodos.list"
-              appDebounceClick
-              (debounceClick)="selectTodo(todo)"
-            >
-              <ion-checkbox slot="start"></ion-checkbox>
-              <ion-label>
-                <p class="ticket-desc">{{todo.label}}</p>
-                <!-- <div class="dev">{{todo.id}}</div> -->
-              </ion-label>
-              <div class="date" slot="end">
-                <ion-icon src="/assets/icon/calendar-regular.svg"></ion-icon>
-                <p color="medium">{{todo.updatedAt | date: 'd/MM/YYYY'}}</p>
-              </div>
-            </ion-item>
+            <ion-item-sliding *ngFor="let todo of groupedTodos.list" #slidingItem>
+              <ion-item lines="none" detail="false" mode="ios" appDebounceClick (debounceClick)="selectTodo(todo)">
+                <ion-checkbox slot="start"></ion-checkbox>
+                <ion-label>
+                  <p class="ticket-desc">{{todo.label}}</p>
+                  <!-- <div class="dev">{{todo.id}}</div> -->
+                </ion-label>
+                <div class="date" slot="end">
+                  <ion-icon src="/assets/icon/calendar-regular.svg"></ion-icon>
+                  <p color="medium">{{todo.updatedAt | date: 'dd/MM/YYYY'}}</p>
+                </div>
+              </ion-item>
+              <ion-item-options side="end">
+                <ion-item-option color="danger" (click)="deleteTodo(slidingItem, todo)">Effacer</ion-item-option>
+              </ion-item-options>
+            </ion-item-sliding>
           </ion-item-group>
         </ion-list>
       </ion-card-content>

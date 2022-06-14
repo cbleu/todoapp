@@ -1,3 +1,4 @@
+import { DirectivesModule } from "./../../directives/directives.module";
 import { PipesModule } from "./../../pipes/pipes.module";
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -16,6 +17,7 @@ import { HomePage } from './home.page';
     IonicModule,
     ReactiveFormsModule,
     PipesModule,
+    DirectivesModule,
     HomePageRoutingModule
   ],
   declarations: [HomePage]
